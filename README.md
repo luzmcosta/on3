@@ -52,6 +52,7 @@ Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/
 - Async execution where possible
 - Consider other pains in managing a Node module. 
 - Improve test coverage
+- Commit a bundle and point index.js to it.
 
 ## Development Guidelines
 
