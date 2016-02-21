@@ -93,7 +93,7 @@ app.publish = (args, callback) => {
 app.increment = (args, callback) => {
   // Empowers API users to set their args outside an options object.
   let options = app.getOptions(args),
-      flags = options.flag;
+    flags = options.flag;
 
   if (options.only) {
     flags = app.flags.increment;
