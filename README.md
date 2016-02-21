@@ -62,7 +62,7 @@ This is not an enforcer, merely a guide for maintainability.
 Simply because it's in the style guide, doesn't mean it should be enforced.
 
 ## Testing
-@todo
+`npm run build && node build/test.js`
 
 ##  Dependencies
 Developers hosting or contributing to this project require the tools that support it:
