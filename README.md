@@ -65,7 +65,10 @@ Simply because it's in the style guide, doesn't mean it should be enforced.
 `npm run build && node build/test.js`
 
 ##  Dependencies
-Developers hosting or contributing to this project require the tools that support it:
+Developers contributing to this project require the tools that support it:
 
-* [Python](https://www.python.org/): Python v2.7+ is a prerequisite of Node.
+* [Babel](https://babeljs.io/)
+* [ShellJS](https://www.npmjs.com/package/shelljs)
+
 * [Node and npm](http://nodejs.org/): Node provides an environment on which to execute JavaScript processes, while npm manages packages.
+* [Python](https://www.python.org/): Python v2.7+ is a prerequisite of Node.
