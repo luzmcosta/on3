@@ -1,6 +1,6 @@
 import vorpal from 'vorpal';
 import shell from 'shelljs';
-import app from './app';
+import app from '../build/app';
 
 let cli = vorpal();
 
