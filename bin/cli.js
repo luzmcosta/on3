@@ -10,7 +10,7 @@ var _shelljs = require('shelljs');
 
 var _shelljs2 = _interopRequireDefault(_shelljs);
 
-var _app = require('./app');
+var _app = require('../build/app');
 
 var _app2 = _interopRequireDefault(_app);
 
