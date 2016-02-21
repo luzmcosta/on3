@@ -4,7 +4,8 @@
   "description": "Simplifies managing Node modules under Git version control.",
   "main": "./index.js",
   "bin": {
-    "on": "./bin/cli.js"
+    "on": "./bin/cli.js",
+    "on3": "./bin/cli.js"
   },
   "scripts": {
     "prebuild": "babel src -d build",
