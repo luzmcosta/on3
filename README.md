@@ -74,4 +74,3 @@ Developers contributing to this project require the tools that support it:
 * [ESLint](http://eslint.org/)
 
 * [Node and npm](http://nodejs.org/): Node provides an environment on which to execute JavaScript processes, while npm manages packages.
-* [Python](https://www.python.org/): Python v2.7+ is a prerequisite of Node.
