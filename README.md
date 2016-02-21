@@ -68,6 +68,7 @@ Developers contributing to this project require the tools that support it:
 
 * [Babel](https://babeljs.io/)
 * [ShellJS](https://www.npmjs.com/package/shelljs)
+* [Vorpal](https://www.npmjs.com/package/vorpal)
 
 * [ESLint](http://eslint.org/)
 
