@@ -31,7 +31,8 @@ app.getOptions = (args) => {
 
 app.set = (options, msg) => {
   // Sets the values requiring knowledge of new version.
-  let currentVersion = np.getVersion();
+  let currentVersion = np.getVersion(),
+    gitmsg, gittag, npmtag;
 
   msg += ' to v' + currentVersion + '."';
 
