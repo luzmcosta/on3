@@ -17,6 +17,9 @@ np.increment = ({version, flags, message, callback, dryrun}) => {
 
   if (!dryrun) {
     shell.exec('npm' + flags + message + ' version ' + version);
+  } else {
+    console.log('Your package would be updated from ' + np.getVersion() +
+      ' to the next ' + version + ' version.');
   }
 
   if (callback) {
