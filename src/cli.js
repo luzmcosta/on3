@@ -13,6 +13,7 @@ option('-g, --gittag [tag]', 'Tag the Git commit.').
 option('-m, --gitmsg [msg]', 'Set the Git commit message.').
 option('-n, --npmtag [tag]', 'Tag the node module.').
 option('-v, --version [version]', 'Increment to the given version.').
+option('--dryrun', 'Report the would-be changes without executing them.').
 action(app.publish);
 
 // Increment the node module's version.
@@ -22,6 +23,7 @@ option('-m, --message [msg]', 'Sets the git commit message.').
 option('-f, --flag [flags]', 'Sets the flags on the `npm version` command.').
 option('-o, --only', 'Does not commit nor tag after updating the npm version.').
 option('-v, --version', 'Sets the version.').
+option('--dryrun', 'Report the would-be changes without executing them.').
 action(app.increment);
 
 // Set the prompt.

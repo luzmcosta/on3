@@ -11,6 +11,7 @@ on3 simplifies common workflows for managing a Node module under Git version con
 `gitmsg` {str} Sets the Git commit message.  
 `npmtag` {str} The tag to apply when executing `npm publish`. This is set to "next" by default so publishing to the "latest" tag is a conscious decision. This should mitigate the risk of accidentally releasing breaking changes.  
 `version` {str} Any value valid to [`npm version`](https://docs.npmjs.com/cli/version). This is set to "prepatch" by default.
+`dryrun` Report the would-be changes without executing them.
 
 **increment**  
 `on3.increment(args: {}, callback: fn)`  
@@ -19,6 +20,7 @@ on3 simplifies common workflows for managing a Node module under Git version con
 `flag` {str} Sets the flags to pass to `npm version`.  
 `only` {bool} If true, increments the version without committing the changes.  
 `version` {str} Any value valid to [`npm version`](https://docs.npmjs.com/cli/version). This is set to "prepatch" by default.
+`--dryrun` Report the would-be changes without executing them.
 
 # CLI
 **publish** _[alias: p]_ Increments the package's version, commits as instructed, then pushes and publishes the package.
@@ -30,6 +32,7 @@ on3 simplifies common workflows for managing a Node module under Git version con
 `-m, --gitmsg ["message"]` Sets the Git commit message. Wrapping your comment in double quotes is recommended.  
 `-n, --npmtag [tag]` Tags the node module. This is set as "next" by default so releasing as "latest" is a conscious choice.  
 `-v, --version [version]` Increments the package to the given version. Uses "prepatch" by default.
+`--dryrun` Report the would-be changes without executing them.
 
 **increment** Increments the package version, commits the changes, and tags the commit with the new version number. See `-o` to avoid the latter two steps.
 
@@ -39,6 +42,7 @@ on3 simplifies common workflows for managing a Node module under Git version con
 `-f, --flags` Sets the flags on the `npm version` command.  
 `-m, --message` Sets the git commit message.  
 `-o, --only` Ignore your repo's status, and do not commit. Only update the version in package.json.  
+`--dryrun` Report the would-be changes without executing them.
 
 # Contributing
 Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/on3/issues).

@@ -39,11 +39,13 @@ app.set = (options, msg) => {
   gittag = options.gittag || 'v' + currentVersion;
   npmtag = options.npmtag || options.tag || 'next';
 
-  // Executes Git publishing process.
-  gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
+  if (!options.dryrun) {
+    // Executes Git publishing process.
+    gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
 
-  // Executes npm publishing process.
-  np.publish(npmtag);
+    // Executes npm publishing process.
+    np.publish(npmtag);
+  }
 
   // Updates user.
   console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
@@ -69,12 +71,20 @@ app.publish = (args, callback) => {
   msg = '"Increments from v' + currentVersion;
 
   // Increments node module version. Does not git tag nor git commit.
-  np.increment(version, app.flags.increment, undefined, () => {
-    app.set(options, msg);
-  });
+  np.increment({
+    callback: () => {
+      app.set(options, msg);
 
-  // Returns user to our application rather than exit.
-  callback();
+      // In CLI, returns user to our application rather than exit.
+      // In API, this can be anything to which the user sets it.
+      callback();
+    },
+
+    dryrun: options.dryrun,
+    flags: app.flags.increment,
+    message: undefined,
+    version,
+  });
 
   return app;
 };
@@ -88,9 +98,14 @@ app.increment = (args, callback) => {
     flags = app.flags.increment;
   }
 
-  np.increment(options.version || app.defaults.v, flags, options.message);
-
-  callback();
+  // In CLI, the callback returns the user to our application.
+  np.increment({
+    callback,
+    dryrun: options.dryrun,
+    flags,
+    message: options.message,
+    version: options.version || app.defaults.v,
+  });
 
   return app;
 };
