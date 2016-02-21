@@ -1,7 +1,7 @@
 on3 simplifies common workflows for managing a Node module under Git version control. Increment your Node module's version, commit, push to GitHub, and publish to npm in one command.
 
 ```
-npm install -D on3
+npm install -g on3
 ```
 
 # API
