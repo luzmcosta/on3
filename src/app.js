@@ -64,9 +64,9 @@ app.publish = (args, callback) => {
   let options = app.getOptions(args),
     version = options.version || app.defaults.v,
     currentVersion = np.getVersion(),
-    msg;
+    msg = options.dryrun ? 'DRYRUN: ' : '';
 
-  console.log('Publishing package. Current version: ' + currentVersion + '.');
+  console.log(msg + 'Publish ' + pkg.name + ':' + currentVersion + '.');
 
   // Starts building the message.
   msg = '"Increments from v' + currentVersion;
