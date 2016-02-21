@@ -4,8 +4,8 @@ import shell from 'shelljs';
 let np = {};
 
 // Get version of given package.
-np.getVersion = (pkg) => {
-  return pkg.version;
+np.getVersion = () => {
+  return require('../package.json').version;
 };
 
 // Increment the version in the package.json.

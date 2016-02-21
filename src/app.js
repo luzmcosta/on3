@@ -1,7 +1,6 @@
 import shell from 'shelljs';
 import np from './np';
 import gi from './gi';
-import pkg from '../package.json';
 
 let app = Object.create({
   defaults: {
@@ -38,7 +37,7 @@ app.publish = (args, callback) => {
 
   let branch = options.branch || app.defaults.branch,
     version = options.version || app.defaults.v,
-    currentVersion = np.getVersion(pkg),
+    currentVersion = np.getVersion(),
     msg, gitmsg, gittag, npmtag;
 
   console.log('Publishing package. Current version: ' + currentVersion + '.');
@@ -50,7 +49,7 @@ app.publish = (args, callback) => {
   np.increment(version, app.flags.increment);
 
   // Sets the values requiring knowledge of new version.
-  currentVersion = np.getVersion(require('../package.json'));
+  currentVersion = np.getVersion();
   msg += ' to v' + currentVersion + '."';
   gitmsg = options.gitmsg || msg;
   gittag = options.gittag || 'v' + currentVersion;
