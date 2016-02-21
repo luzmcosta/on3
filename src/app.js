@@ -50,17 +50,17 @@ app.publish = (args, callback) => {
   np.increment(version, app.flags.increment);
 
   // Sets the values requiring knowledge of new version.
-  currentVersion = np.getVersion(pkg);
+  currentVersion = np.getVersion(require('../package.json'));
   msg += ' to v' + currentVersion + '."';
   gitmsg = options.gitmsg || msg;
   gittag = options.gittag || 'v' + currentVersion;
   npmtag = options.npmtag || options.tag || 'next';
 
   // Executes Git publishing process.
-  // gi.commit(msg).tag(gittag, gitmsg).push(branch);
+  gi.commit(msg).tag(gittag, gitmsg).push(branch);
 
   // Executes npm publishing process.
-  // np.publish(npmtag);
+  np.publish(npmtag);
 
   // Updates user.
   console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
