@@ -1,6 +1,8 @@
 on3 simplifies common workflows for managing a Node module under Git version control. Increment your Node module's version, commit, push to GitHub, and publish to npm in one command.
 
-`npm install -D on3`
+```
+npm install -D on3
+```
 
 # API
 **publish**  
@@ -57,8 +59,6 @@ Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/
 ## Development Guidelines
 
 ### eslint
-Simply because it's in the style guide, doesn't mean it should be enforced.
-
 `npm run lint`
 
 ## Testing
@@ -67,10 +67,10 @@ Simply because it's in the style guide, doesn't mean it should be enforced.
 ##  Dependencies
 Developers contributing to this project require the tools that support it:
 
-* [Babel](https://babeljs.io/)
 * [ShellJS](https://www.npmjs.com/package/shelljs)
 * [Vorpal](https://www.npmjs.com/package/vorpal)
 
+* [Babel](https://babeljs.io/)
 * [ESLint](http://eslint.org/)
 
 * [Node and npm](http://nodejs.org/): Node provides an environment on which to execute JavaScript processes, while npm manages packages.
