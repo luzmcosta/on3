@@ -6,7 +6,7 @@ let np = {};
 
 // Get version of given package.
 np.getVersion = () => {
-  let pkg = fs.readFileSync('../package.json');
+  let pkg = fs.readFileSync('package.json');
   return JSON.parse(pkg).version;
 };
 
