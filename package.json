@@ -46,6 +46,7 @@
     "babel-preset-stage-0": ">=6.5.0"
   },
   "dependencies": {
+    "shelljs": "0.6.0",
     "vorpal": "1.9.4"
   }
 }
