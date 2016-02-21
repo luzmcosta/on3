@@ -30,15 +30,17 @@ app.getOptions = (args) => {
 };
 
 app.set = (options, msg) => {
-  // Sets the values requiring knowledge of new version.
   let currentVersion = np.getVersion(),
-    gitmsg, gittag, npmtag;
+    branch = options.branch || app.defaults.branch,
+    npmtag = options.npmtag || options.tag || 'next',
+    gitmsg,
+    gittag;
 
   msg += ' to v' + currentVersion + '."';
 
+  // Set the values requiring knowledge of new version.
   gitmsg = options.gitmsg || msg;
   gittag = options.gittag || 'v' + currentVersion;
-  npmtag = options.npmtag || options.tag || 'next';
 
   if (!options.dryrun) {
     // Executes Git publishing process.
@@ -55,13 +57,11 @@ app.set = (options, msg) => {
 };
 
 app.publish = (args, callback) => {
-  // Empowers API users to set their args outside an options object.
-  let options = app.getOptions(args);
-
   // Validates.
   app.init();
 
-  let branch = options.branch || app.defaults.branch,
+  // Empowers API users to set their args outside an options object.
+  let options = app.getOptions(args),
     version = options.version || app.defaults.v,
     currentVersion = np.getVersion(),
     msg;
