@@ -1,11 +1,13 @@
 import shell from 'shelljs';
+import fs from 'fs';
 
 // Holds Node-related commands.
 let np = {};
 
 // Get version of given package.
 np.getVersion = () => {
-  return require('../package.json').version;
+  let pkg = fs.readFileSync('../package.json');
+  return JSON.parse(pkg).version;
 };
 
 // Increment the version in the package.json.
