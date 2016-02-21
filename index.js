@@ -1,5 +1,1 @@
-module.exports = {
-  app: require('./build/app.js'),
-  gi: require('./build/gi.js'),
-  np: require('.build/np.js'),
-};
+module.exports = require('./build/app.js');
