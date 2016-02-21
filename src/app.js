@@ -30,25 +30,25 @@ app.getOptions = (args) => {
 };
 
 app.set = (options, msg) => {
-  return () => {
-    // Sets the values requiring knowledge of new version.
-    let currentVersion = np.getVersion();
+  // Sets the values requiring knowledge of new version.
+  let currentVersion = np.getVersion();
 
-    msg += ' to v' + currentVersion + '."';
+  msg += ' to v' + currentVersion + '."';
 
-    gitmsg = options.gitmsg || msg;
-    gittag = options.gittag || 'v' + currentVersion;
-    npmtag = options.npmtag || options.tag || 'next';
+  gitmsg = options.gitmsg || msg;
+  gittag = options.gittag || 'v' + currentVersion;
+  npmtag = options.npmtag || options.tag || 'next';
 
-    // Executes Git publishing process.
-    gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
+  // Executes Git publishing process.
+  gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
 
-    // Executes npm publishing process.
-    np.publish(npmtag);
+  // Executes npm publishing process.
+  np.publish(npmtag);
 
-    // Updates user.
-    console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
-  };
+  // Updates user.
+  console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
+
+  return app;
 };
 
 app.publish = (args, callback) => {
