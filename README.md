@@ -40,14 +40,14 @@ on3 simplifies common workflows for managing a Node module under Git version con
 `-m, --message` Sets the git commit message.  
 `-o, --only` Ignore your repo's status, and do not commit. Only update the version in package.json.  
 
-# Engineering Tasks (@todo)
+# Contributing
+Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/on3/issues).
+
+## Engineering Tasks (@todo)
 - Write command to commit + increment
 - Async execution where possible
 - Consider other pains in managing a Node module. 
 - Improve test coverage
-
-# :wrench: Contributing
-Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/on3/issues).
 
 ## Development Guidelines
 
