@@ -55,11 +55,10 @@ Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/
 
 ## Development Guidelines
 
-### jscs
-This is not an enforcer, merely a guide for maintainability.
-
 ### eslint
 Simply because it's in the style guide, doesn't mean it should be enforced.
+
+`npm run lint`
 
 ## Testing
 `npm run build && node build/test.js`
@@ -69,6 +68,8 @@ Developers contributing to this project require the tools that support it:
 
 * [Babel](https://babeljs.io/)
 * [ShellJS](https://www.npmjs.com/package/shelljs)
+
+* [ESLint](http://eslint.org/)
 
 * [Node and npm](http://nodejs.org/): Node provides an environment on which to execute JavaScript processes, while npm manages packages.
 * [Python](https://www.python.org/): Python v2.7+ is a prerequisite of Node.
