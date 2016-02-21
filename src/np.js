@@ -9,10 +9,16 @@ np.getVersion = () => {
 };
 
 // Increment the version in the package.json.
-np.increment = (version, flags, message) => {
+np.increment = (version, flags, message, callback) => {
   flags = flags && flags !== true ? ' ' + flags : '';
   message = message ? ' -m ' + message : '';
+
   shell.exec('npm' + flags + message + ' version ' + version);
+
+  if (callback) {
+    callback();
+  }
+
   return np;
 };
 

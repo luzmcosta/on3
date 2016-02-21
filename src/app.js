@@ -1,6 +1,7 @@
 import shell from 'shelljs';
 import np from './np';
 import gi from './gi';
+import pkg from '../package.json';
 
 let app = Object.create({
   defaults: {
@@ -28,6 +29,28 @@ app.getOptions = (args) => {
   return args.options ? args.options : args;
 };
 
+app.set = (options, msg) => {
+  return () => {
+    // Sets the values requiring knowledge of new version.
+    let currentVersion = np.getVersion();
+
+    msg += ' to v' + currentVersion + '."';
+
+    gitmsg = options.gitmsg || msg;
+    gittag = options.gittag || 'v' + currentVersion;
+    npmtag = options.npmtag || options.tag || 'next';
+
+    // Executes Git publishing process.
+    gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
+
+    // Executes npm publishing process.
+    np.publish(npmtag);
+
+    // Updates user.
+    console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
+  };
+};
+
 app.publish = (args, callback) => {
   // Empowers API users to set their args outside an options object.
   let options = app.getOptions(args);
@@ -38,7 +61,7 @@ app.publish = (args, callback) => {
   let branch = options.branch || app.defaults.branch,
     version = options.version || app.defaults.v,
     currentVersion = np.getVersion(),
-    msg, gitmsg, gittag, npmtag;
+    msg;
 
   console.log('Publishing package. Current version: ' + currentVersion + '.');
 
@@ -46,23 +69,9 @@ app.publish = (args, callback) => {
   msg = '"Increments from v' + currentVersion;
 
   // Increments node module version. Does not git tag nor git commit.
-  np.increment(version, app.flags.increment);
-
-  // Sets the values requiring knowledge of new version.
-  currentVersion = np.getVersion();
-  msg += ' to v' + currentVersion + '."';
-  gitmsg = options.gitmsg || msg;
-  gittag = options.gittag || 'v' + currentVersion;
-  npmtag = options.npmtag || options.tag || 'next';
-
-  // Executes Git publishing process.
-  gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
-
-  // Executes npm publishing process.
-  np.publish(npmtag);
-
-  // Updates user.
-  console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
+  np.increment(version, app.flags.increment, undefined, () => {
+    app.set(options, msg);
+  });
 
   // Returns user to our application rather than exit.
   callback();
