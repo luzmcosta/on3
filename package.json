@@ -7,7 +7,7 @@
     "on": "./bin/cli.js"
   },
   "scripts": {
-    "prebuild": "babel src -d build",
+    "prebuild": "babel src -d build && babel src -d bin",
     "build": "node build/make.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
