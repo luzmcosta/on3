@@ -57,7 +57,7 @@ app.publish = (args, callback) => {
   npmtag = options.npmtag || options.tag || 'next';
 
   // Executes Git publishing process.
-  gi.commit(msg).tag(gittag, gitmsg).push(branch);
+  gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
 
   // Executes npm publishing process.
   np.publish(npmtag);

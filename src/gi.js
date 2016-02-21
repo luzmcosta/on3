@@ -13,6 +13,11 @@ gi.is = () => {
   return true;
 };
 
+gi.add = (file) => {
+  shell.exec('git add ' + file);
+  return gi;
+};
+
 gi.commit = (msg) => {
   shell.exec('git commit -m ' + msg);
   return gi;
