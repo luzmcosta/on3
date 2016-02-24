@@ -12,7 +12,7 @@ npm install -g on3
 `gittag` {str} By default, this is a "v" followed by the package version in package.json, e.g. "v1.0.0-0".  
 `gitmsg` {str} Sets the Git commit message.  
 `npmtag` {str} The tag to apply when executing `npm publish`. This is set to "next" by default so publishing to the "latest" tag is a conscious decision. This should mitigate the risk of accidentally releasing breaking changes.  
-`version` {str} Any value valid to [`npm version`](https://docs.npmjs.com/cli/version). This is set to "prepatch" by default.
+`version` {str} Any value valid to [`npm version`](https://docs.npmjs.com/cli/version). This is set to "prepatch" by default.  
 `dryrun` Report the would-be changes without executing them.
 
 **increment**  
@@ -21,7 +21,7 @@ npm install -g on3
 `message` {str} Sets the Git commit message.  
 `flag` {str} Sets the flags to pass to `npm version`.  
 `only` {bool} If true, increments the version without committing the changes.  
-`version` {str} Any value valid to [`npm version`](https://docs.npmjs.com/cli/version). This is set to "prepatch" by default.
+`version` {str} Any value valid to [`npm version`](https://docs.npmjs.com/cli/version). This is set to "prepatch" by default.  
 `--dryrun` Report the would-be changes without executing them.
 
 # CLI
@@ -33,7 +33,7 @@ npm install -g on3
 `-g, --gittag [tag]` Tags the Git commit. The new version number is used by default.  
 `-m, --gitmsg ["message"]` Sets the Git commit message. Wrapping your comment in double quotes is recommended.  
 `-n, --npmtag [tag]` Tags the node module. This is set as "next" by default so releasing as "latest" is a conscious choice.  
-`-v, --version [version]` Increments the package to the given version. Uses "prepatch" by default.
+`-v, --version [version]` Increments the package to the given version. Uses "prepatch" by default.  
 `--dryrun` Report the would-be changes without executing them.
 
 **increment** Increments the package version, commits the changes, and tags the commit with the new version number. See `-o` to avoid the latter two steps.
