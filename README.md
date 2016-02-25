@@ -57,11 +57,12 @@ publish -v patch -n latest
 Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/on3/issues).
 
 ## Engineering Tasks (@todo)
+- Improve the user experience with better, colored feedback
 - Write command to commit + increment
 - Async execution where possible
-- Consider other pains in managing a Node module. 
+- Commit a bundle and point index.js to it
 - Improve test coverage
-- Commit a bundle and point index.js to it.
+- Consider other pains in managing a Node module
 
 ## Development Guidelines
 
