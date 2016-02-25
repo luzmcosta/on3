@@ -25,6 +25,13 @@ npm install -g on3
 `--dryrun` Report the would-be changes without executing them.
 
 # CLI
+
+```shell
+# Example
+on3
+publish -v patch -n latest
+```
+
 **publish** _[alias: p]_ Increments the package's version, commits as instructed, then pushes and publishes the package.
 
   `publish -b master -v prepatch -g v1.0.1 -n next -m "Increments from v1.0.1-0 to v1.0.1-1."`
