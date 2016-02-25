@@ -28,7 +28,7 @@ npm install -g on3
 
 ```shell
 # Example
-on3
+on3 # alias: on
 publish -v patch -n latest
 ```
 
