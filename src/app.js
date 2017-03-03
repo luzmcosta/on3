@@ -65,13 +65,13 @@ app.set = (options, msg) => {
 app.pwd = () => {
   const pwd = shell.pwd();
   console.info(pwd);
-  return pwd;
+  return app;
 };
 
 app.version = function() {
   const version = np.getVersion(np.getPackage(PKG_PATH));
   console.info(version);
-  return version;
+  return app;
 };
 
 app.publish = (args, callback) => {
