@@ -63,16 +63,20 @@ app.set = (options, msg) => {
   return app;
 };
 
-app.pwd = () => {
+app.pwd = (args, callback) => {
   const pwd = shell.pwd();
   console.info(pwd);
-  return app;
+
+  // In CLI, returns user to application.
+  callback();
 };
 
-app.version = function() {
+app.version = function(args, callback) {
   const version = np.getVersion();
   console.info(version);
-  return app;
+
+  // In CLI, returns user to application.
+  callback();
 };
 
 app.publish = (args, callback) => {
