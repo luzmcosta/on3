@@ -1,7 +1,13 @@
+import fs from 'fs';
 import shell from 'shelljs';
 import np from './np';
 import gi from './gi';
-import pkg from '../package.json';
+
+const pwd = shell.pwd();
+
+console.log('Current working directory.', pwd);
+
+const pkg = fs.readFileSync(pwd + 'package.json');
 
 let app = {
   defaults: {
