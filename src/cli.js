@@ -27,4 +27,4 @@ option('--dryrun', 'Report the would-be changes without executing them.').
 action(app.increment);
 
 // Set the prompt.
-cli.delimiter('on >>').show();
+cli.delimiter('on3 >>').show();
