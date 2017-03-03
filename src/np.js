@@ -14,7 +14,7 @@ np.getPackage = (path='package.json') => {
 };
 
 // Get version of given package.
-np.getVersion = (pkg=this.getPackage()) => {
+np.getVersion = (pkg=np.getPackage()) => {
   return pkg.version;
 };
 
