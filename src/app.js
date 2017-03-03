@@ -3,7 +3,7 @@ import np from './np';
 import gi from './gi';
 import pkg from '../package.json';
 
-let app = Object.create({
+let app = {
   defaults: {
     branch: 'master',
     v: 'prepatch',
@@ -14,7 +14,7 @@ let app = Object.create({
   flags: {
     increment: '--no-git-tag-version -f',
   },
-});
+};
 
 app.init = () => {
   if (!gi.is()) {
