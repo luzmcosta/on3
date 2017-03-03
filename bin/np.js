@@ -32,7 +32,7 @@ np.getPackage = function () {
 
 // Get version of given package.
 np.getVersion = function () {
-  var pkg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined.getPackage();
+  var pkg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : np.getPackage();
 
   return pkg.version;
 };
