@@ -3,11 +3,9 @@ import shell from 'shelljs';
 import np from './np';
 import gi from './gi';
 
-const pwd = shell.pwd();
-
-console.log('Current working directory.', pwd);
-
-const pkg = fs.readFileSync(pwd + '/package.json');
+const PWD = shell.pwd();
+const PKG_PATH = PWD + '/package.json';
+const PKG = np.getPackage(PKG_PATH);
 
 let app = {
   defaults: {
@@ -22,12 +20,14 @@ let app = {
   },
 };
 
-app.init = () => {
+app.init = function() {
   if (!gi.is()) {
     shell.exit(1);
   }
 
-  return app;
+  this.package = PKG;
+
+  return this;
 };
 
 // Gets options passed.
@@ -50,7 +50,7 @@ app.set = (options, msg) => {
 
   if (!options.dryrun) {
     // Executes Git publishing process.
-    gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
+    gi.add(PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
 
     // Executes npm publishing process.
     np.publish(npmtag);
@@ -63,11 +63,15 @@ app.set = (options, msg) => {
 };
 
 app.pwd = () => {
-  return shell.pwd();
+  const pwd = shell.pwd();
+  console.info(pwd);
+  return pwd;
 };
 
-app.version = () => {
-  return np.getVersion();
+app.version = function() {
+  const version = np.getVersion(np.getPackage(PKG_PATH));
+  console.info(version);
+  return version;
 };
 
 app.publish = (args, callback) => {
