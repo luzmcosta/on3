@@ -24,11 +24,9 @@ var _gi2 = _interopRequireDefault(_gi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var pwd = _shelljs2.default.pwd();
-
-console.log('Current working directory.', pwd);
-
-var pkg = _fs2.default.readFileSync(pwd + '/package.json');
+var PWD = _shelljs2.default.pwd();
+var PKG_PATH = PWD + '/package.json';
+var PKG = _np2.default.getPackage(PKG_PATH);
 
 var app = {
   defaults: {
@@ -48,7 +46,9 @@ app.init = function () {
     _shelljs2.default.exit(1);
   }
 
-  return app;
+  this.package = PKG;
+
+  return this;
 };
 
 // Gets options passed.
@@ -71,7 +71,7 @@ app.set = function (options, msg) {
 
   if (!options.dryrun) {
     // Executes Git publishing process.
-    _gi2.default.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
+    _gi2.default.add(PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
 
     // Executes npm publishing process.
     _np2.default.publish(npmtag);
@@ -84,11 +84,15 @@ app.set = function (options, msg) {
 };
 
 app.pwd = function () {
-  return _shelljs2.default.pwd();
+  var pwd = _shelljs2.default.pwd();
+  console.info(pwd);
+  return pwd;
 };
 
 app.version = function () {
-  return _np2.default.getVersion();
+  var version = _np2.default.getVersion(_np2.default.getPackage(PKG_PATH));
+  console.info(version);
+  return version;
 };
 
 app.publish = function (args, _callback) {

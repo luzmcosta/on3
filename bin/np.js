@@ -19,10 +19,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Holds Node-related commands.
 var np = {};
 
+np.getPackage = function () {
+  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'package.json';
+
+  var pkg = _fs2.default.readFileSync(path);
+  if (pkg) {
+    return JSON.parse(pkg);
+  } else {
+    console.warn('We were unable to retrieve the package.json at ' + path);
+  }
+};
+
 // Get version of given package.
 np.getVersion = function () {
-  var pkg = _fs2.default.readFileSync('package.json');
-  return JSON.parse(pkg).version;
+  var pkg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined.getPackage();
+
+  return pkg.version;
 };
 
 // Increment the version in the package.json.
