@@ -60,9 +60,6 @@ Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/
 
 ## Engineering Tasks (@todo)
 - Improve the user experience with better, colored feedback
-- Write command to commit + increment
-- Async execution where possible
-- Commit a bundle and point index.js to it
 - Improve test coverage
 - Consider other pains in managing a Node module
 
