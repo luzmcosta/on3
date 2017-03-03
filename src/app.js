@@ -7,7 +7,7 @@ const pwd = shell.pwd();
 
 console.log('Current working directory.', pwd);
 
-const pkg = fs.readFileSync(pwd + 'package.json');
+const pkg = fs.readFileSync(pwd + '/package.json');
 
 let app = {
   defaults: {
