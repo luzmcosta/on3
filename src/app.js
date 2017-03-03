@@ -39,10 +39,6 @@ app.dryrun = ({
 }) => {
   // Updates user.
   console.info(`Dry run complete.`);
-  console.info(`You would have published ${project}.`);
-  console.info(`Your git message would have read, "${msg}".`);
-  console.info(`Your package.json would have been updated from ${oldVersion}
-    to ${currentVersion} at ${pkgPath}.`);
   console.info(`The commit would have been tagged ${gittag}.`);
   console.info(`You would have pushed to the branch ${branch}.`);
 };
