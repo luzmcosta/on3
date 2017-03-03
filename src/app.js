@@ -39,7 +39,8 @@ app.set = (options, msg) => {
     npmtag = options.npmtag || options.tag || 'next',
     gitmsg,
     gittag,
-    pkgName = np.PKG.name,
+    pkg = np.getPackage(),
+    pkgName = pkg.name,
     pkgPath = np.PKG_PATH;
 
   msg += ' to v' + currentVersion + '."';
