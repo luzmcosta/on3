@@ -33,7 +33,22 @@ app.getOptions = (args) => {
   return args.options ? args.options : args;
 };
 
-app.set = (options, msg) => {
+// Communicates a dry run.
+app.dryrun = ({
+  project, msg, oldVersion, currentVersion, pkgPath, gittag, branch
+}) => {
+  // Updates user.
+  console.info(`Dry run complete.`);
+  console.info(`You would have published ${project}.`);
+  console.info(`Your git message would have read, "${msg}".`);
+  console.info(`Your package.json would have been updated from ${oldVersion}
+    to ${currentVersion} at ${pkgPath}.`);
+  console.info(`The commit would have been tagged ${gittag}.`);
+  console.info(`You would have pushed to the branch ${branch}.`);
+};
+
+// @TODO Refactor.
+app.set = (options, msg, oldVersion) => {
   let currentVersion = np.getVersion(),
     branch = options.branch || app.defaults.branch,
     npmtag = options.npmtag || options.tag || 'next',
@@ -41,7 +56,8 @@ app.set = (options, msg) => {
     gittag,
     pkg = np.getPackage(),
     pkgName = pkg ? pkg.name : undefined,
-    pkgPath = np.PKG_PATH;
+    pkgPath = np.PKG_PATH,
+    project = `${pkgName}@${currentVersion}#${npmtag}`;
 
   if (!pkgName) {
     console.warn('We are unable to find a package.json for this project. ' +
@@ -61,10 +77,14 @@ app.set = (options, msg) => {
 
     // Executes npm publishing process.
     np.publish(npmtag);
-  }
 
-  // Updates user.
-  console.log(`${pkgName}@${currentVersion} #${npmtag} has been published.`);
+    // Updates user.
+    console.info(`Done! You've published ${project}.`);
+  } else {
+    app.dryrun({
+      project, msg, oldVersion, currentVersion, pkgPath, gittag, branch
+    });
+  }
 
   return app;
 };
@@ -115,7 +135,8 @@ app.publish = (args, callback) => {
   // Increments node module version. Does not git tag nor git commit.
   np.increment({
     callback: () => {
-      app.set(options, msg);
+      // Send old version to `set` method.
+      app.set(options, msg, currentVersion);
 
       // In CLI, returns user to our application rather than exit.
       // In API, this can be anything to which the user sets it.
