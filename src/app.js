@@ -40,8 +40,14 @@ app.set = (options, msg) => {
     gitmsg,
     gittag,
     pkg = np.getPackage(),
-    pkgName = pkg.name,
+    pkgName = pkg ? pkg.name : undefined,
     pkgPath = np.PKG_PATH;
+
+  if (!pkgName) {
+    console.warn('We are unable to find a package.json for this project. ' +
+      'Exiting ...');
+    return app;
+  }
 
   msg += ' to v' + currentVersion + '."';
 
@@ -88,8 +94,18 @@ app.publish = (args, callback) => {
     version = options.version || app.defaults.v,
     pkg = np.getPackage(),
     currentVersion = np.getVersion(),
-    pkgName = pkg.name,
+    pkgName = pkg ? pkg.name : undefined,
     msg = options.dryrun ? 'DRYRUN: ' : '';
+
+  if (!pkgName) {
+    console.warn('We are unable to find a package.json for this project. ' +
+      'Exiting ...');
+
+    // In CLI, returns user to application.
+    callback();
+
+    return app;
+  }
 
   console.log(msg + 'Publish ' + version + ' update to ' + pkgName + '@' + currentVersion + '.');
 
