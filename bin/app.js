@@ -54,7 +54,27 @@ app.getOptions = function (args) {
   return args.options ? args.options : args;
 };
 
-app.set = function (options, msg) {
+// Communicates a dry run.
+app.dryrun = function (_ref) {
+  var project = _ref.project,
+      msg = _ref.msg,
+      oldVersion = _ref.oldVersion,
+      currentVersion = _ref.currentVersion,
+      pkgPath = _ref.pkgPath,
+      gittag = _ref.gittag,
+      branch = _ref.branch;
+
+  // Updates user.
+  console.info('Dry run complete.');
+  console.info('You would have published ' + project + '.');
+  console.info('Your git message would have read, "' + msg + '".');
+  console.info('Your package.json would have been updated from ' + oldVersion + '\n    to ' + currentVersion + ' at ' + pkgPath + '.');
+  console.info('The commit would have been tagged ' + gittag + '.');
+  console.info('You would have pushed to the branch ' + branch + '.');
+};
+
+// @TODO Refactor.
+app.set = function (options, msg, oldVersion) {
   var currentVersion = _np2.default.getVersion(),
       branch = options.branch || app.defaults.branch,
       npmtag = options.npmtag || options.tag || 'next',
@@ -62,7 +82,8 @@ app.set = function (options, msg) {
       gittag = void 0,
       pkg = _np2.default.getPackage(),
       pkgName = pkg ? pkg.name : undefined,
-      pkgPath = _np2.default.PKG_PATH;
+      pkgPath = _np2.default.PKG_PATH,
+      project = pkgName + '@' + currentVersion + '#' + npmtag;
 
   if (!pkgName) {
     console.warn('We are unable to find a package.json for this project. ' + 'Exiting ...');
@@ -81,10 +102,14 @@ app.set = function (options, msg) {
 
     // Executes npm publishing process.
     _np2.default.publish(npmtag);
-  }
 
-  // Updates user.
-  console.log(pkgName + '@' + currentVersion + ' #' + npmtag + ' has been published.');
+    // Updates user.
+    console.info('Done! You\'ve published ' + project + '.');
+  } else {
+    app.dryrun({
+      project: project, msg: msg, oldVersion: oldVersion, currentVersion: currentVersion, pkgPath: pkgPath, gittag: gittag, branch: branch
+    });
+  }
 
   return app;
 };
@@ -134,7 +159,8 @@ app.publish = function (args, _callback) {
   // Increments node module version. Does not git tag nor git commit.
   _np2.default.increment({
     callback: function callback() {
-      app.set(options, msg);
+      // Send old version to `set` method.
+      app.set(options, msg, currentVersion);
 
       // In CLI, returns user to our application rather than exit.
       // In API, this can be anything to which the user sets it.
