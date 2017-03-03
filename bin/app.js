@@ -59,7 +59,9 @@ app.set = function (options, msg) {
       branch = options.branch || app.defaults.branch,
       npmtag = options.npmtag || options.tag || 'next',
       gitmsg = void 0,
-      gittag = void 0;
+      gittag = void 0,
+      pkgName = _np2.default.PKG.name,
+      pkgPath = _np2.default.PKG_PATH;
 
   msg += ' to v' + currentVersion + '."';
 
@@ -69,14 +71,14 @@ app.set = function (options, msg) {
 
   if (!options.dryrun) {
     // Executes Git publishing process.
-    _gi2.default.add(_np2.default.PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
+    _gi2.default.add(pkgPath).commit(msg).tag(gittag, gitmsg).push(branch);
 
     // Executes npm publishing process.
     _np2.default.publish(npmtag);
   }
 
   // Updates user.
-  console.log(pkg.name + '@' + currentVersion + ' #' + npmtag + ' has been published.');
+  console.log(pkgName + '@' + currentVersion + ' #' + npmtag + ' has been published.');
 
   return app;
 };
