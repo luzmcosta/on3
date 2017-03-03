@@ -38,7 +38,9 @@ app.set = (options, msg) => {
     branch = options.branch || app.defaults.branch,
     npmtag = options.npmtag || options.tag || 'next',
     gitmsg,
-    gittag;
+    gittag,
+    pkgName = np.PKG.name,
+    pkgPath = np.PKG_PATH;
 
   msg += ' to v' + currentVersion + '."';
 
@@ -48,14 +50,14 @@ app.set = (options, msg) => {
 
   if (!options.dryrun) {
     // Executes Git publishing process.
-    gi.add(np.PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
+    gi.add(pkgPath).commit(msg).tag(gittag, gitmsg).push(branch);
 
     // Executes npm publishing process.
     np.publish(npmtag);
   }
 
   // Updates user.
-  console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
+  console.log(`${pkgName}@${currentVersion} #${npmtag} has been published.`);
 
   return app;
 };
