@@ -9,10 +9,12 @@ let np = {PWD, PKG_PATH};
 
 np.getPackage = (path=PKG_PATH) => {
   let pkg = fs.readFileSync(path);
+
   if (pkg) {
     return JSON.parse(pkg);
   } else {
     console.warn(`We were unable to retrieve the package.json at ${path}`);
+    return {};
   }
 };
 
