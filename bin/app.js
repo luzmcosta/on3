@@ -61,8 +61,13 @@ app.set = function (options, msg) {
       gitmsg = void 0,
       gittag = void 0,
       pkg = _np2.default.getPackage(),
-      pkgName = pkg.name,
+      pkgName = pkg ? pkg.name : undefined,
       pkgPath = _np2.default.PKG_PATH;
+
+  if (!pkgName) {
+    console.warn('We are unable to find a package.json for this project. ' + 'Exiting ...');
+    return app;
+  }
 
   msg += ' to v' + currentVersion + '."';
 
@@ -84,16 +89,20 @@ app.set = function (options, msg) {
   return app;
 };
 
-app.pwd = function () {
+app.pwd = function (args, callback) {
   var pwd = _shelljs2.default.pwd();
   console.info(pwd);
-  return app;
+
+  // In CLI, returns user to application.
+  callback();
 };
 
-app.version = function () {
+app.version = function (args, callback) {
   var version = _np2.default.getVersion();
   console.info(version);
-  return app;
+
+  // In CLI, returns user to application.
+  callback();
 };
 
 app.publish = function (args, _callback) {
@@ -105,8 +114,17 @@ app.publish = function (args, _callback) {
       version = options.version || app.defaults.v,
       pkg = _np2.default.getPackage(),
       currentVersion = _np2.default.getVersion(),
-      pkgName = pkg.name,
+      pkgName = pkg ? pkg.name : undefined,
       msg = options.dryrun ? 'DRYRUN: ' : '';
+
+  if (!pkgName) {
+    console.warn('We are unable to find a package.json for this project. ' + 'Exiting ...');
+
+    // In CLI, returns user to application.
+    _callback();
+
+    return app;
+  }
 
   console.log(msg + 'Publish ' + version + ' update to ' + pkgName + '@' + currentVersion + '.');
 
