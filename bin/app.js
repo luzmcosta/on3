@@ -86,13 +86,13 @@ app.set = function (options, msg) {
 app.pwd = function () {
   var pwd = _shelljs2.default.pwd();
   console.info(pwd);
-  return pwd;
+  return app;
 };
 
 app.version = function () {
   var version = _np2.default.getVersion(_np2.default.getPackage(PKG_PATH));
   console.info(version);
-  return version;
+  return app;
 };
 
 app.publish = function (args, _callback) {
