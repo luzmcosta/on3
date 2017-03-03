@@ -60,7 +60,8 @@ app.set = function (options, msg) {
       npmtag = options.npmtag || options.tag || 'next',
       gitmsg = void 0,
       gittag = void 0,
-      pkgName = _np2.default.PKG.name,
+      pkg = _np2.default.getPackage(),
+      pkgName = pkg.name,
       pkgPath = _np2.default.PKG_PATH;
 
   msg += ' to v' + currentVersion + '."';

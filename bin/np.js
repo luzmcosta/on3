@@ -26,10 +26,12 @@ np.getPackage = function () {
   var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : PKG_PATH;
 
   var pkg = _fs2.default.readFileSync(path);
+
   if (pkg) {
     return JSON.parse(pkg);
   } else {
     console.warn('We were unable to retrieve the package.json at ' + path);
+    return {};
   }
 };
 
