@@ -3,9 +3,7 @@ import shell from 'shelljs';
 import np from './np';
 import gi from './gi';
 
-const PWD = shell.pwd();
-const PKG_PATH = PWD + '/package.json';
-const PKG = np.getPackage(PKG_PATH);
+const PKG = np.getPackage();
 
 let app = {
   defaults: {
@@ -50,7 +48,7 @@ app.set = (options, msg) => {
 
   if (!options.dryrun) {
     // Executes Git publishing process.
-    gi.add(PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
+    gi.add(np.PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
 
     // Executes npm publishing process.
     np.publish(npmtag);
@@ -69,7 +67,7 @@ app.pwd = () => {
 };
 
 app.version = function() {
-  const version = np.getVersion(np.getPackage(PKG_PATH));
+  const version = np.getVersion();
   console.info(version);
   return app;
 };
@@ -81,10 +79,12 @@ app.publish = (args, callback) => {
   // Empowers API users to set their args outside an options object.
   let options = app.getOptions(args),
     version = options.version || app.defaults.v,
+    pkg = np.getPackage(),
     currentVersion = np.getVersion(),
+    pkgName = pkg.name,
     msg = options.dryrun ? 'DRYRUN: ' : '';
 
-  console.log(msg + 'Publish ' + version + ' update to ' + pkg.name + '@' + currentVersion + '.');
+  console.log(msg + 'Publish ' + version + ' update to ' + pkgName + '@' + currentVersion + '.');
 
   // Starts building the message.
   msg = '"Increments from v' + currentVersion;

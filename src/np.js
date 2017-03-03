@@ -1,10 +1,13 @@
 import shell from 'shelljs';
 import fs from 'fs';
 
-// Holds Node-related commands.
-let np = {};
+const PWD = shell.pwd();
+const PKG_PATH = PWD + '/package.json';
 
-np.getPackage = (path='package.json') => {
+// Holds Node-related commands.
+let np = {PWD, PKG_PATH};
+
+np.getPackage = (path=PKG_PATH) => {
   let pkg = fs.readFileSync(path);
   if (pkg) {
     return JSON.parse(pkg);
