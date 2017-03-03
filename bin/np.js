@@ -16,11 +16,14 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var PWD = _shelljs2.default.pwd();
+var PKG_PATH = PWD + '/package.json';
+
 // Holds Node-related commands.
-var np = {};
+var np = { PWD: PWD, PKG_PATH: PKG_PATH };
 
 np.getPackage = function () {
-  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'package.json';
+  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : PKG_PATH;
 
   var pkg = _fs2.default.readFileSync(path);
   if (pkg) {

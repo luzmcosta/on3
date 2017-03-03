@@ -24,9 +24,7 @@ var _gi2 = _interopRequireDefault(_gi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PWD = _shelljs2.default.pwd();
-var PKG_PATH = PWD + '/package.json';
-var PKG = _np2.default.getPackage(PKG_PATH);
+var PKG = _np2.default.getPackage();
 
 var app = {
   defaults: {
@@ -71,7 +69,7 @@ app.set = function (options, msg) {
 
   if (!options.dryrun) {
     // Executes Git publishing process.
-    _gi2.default.add(PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
+    _gi2.default.add(_np2.default.PKG_PATH).commit(msg).tag(gittag, gitmsg).push(branch);
 
     // Executes npm publishing process.
     _np2.default.publish(npmtag);
@@ -90,7 +88,7 @@ app.pwd = function () {
 };
 
 app.version = function () {
-  var version = _np2.default.getVersion(_np2.default.getPackage(PKG_PATH));
+  var version = _np2.default.getVersion();
   console.info(version);
   return app;
 };
@@ -102,10 +100,12 @@ app.publish = function (args, _callback) {
   // Empowers API users to set their args outside an options object.
   var options = app.getOptions(args),
       version = options.version || app.defaults.v,
+      pkg = _np2.default.getPackage(),
       currentVersion = _np2.default.getVersion(),
+      pkgName = pkg.name,
       msg = options.dryrun ? 'DRYRUN: ' : '';
 
-  console.log(msg + 'Publish ' + version + ' update to ' + pkg.name + '@' + currentVersion + '.');
+  console.log(msg + 'Publish ' + version + ' update to ' + pkgName + '@' + currentVersion + '.');
 
   // Starts building the message.
   msg = '"Increments from v' + currentVersion;
