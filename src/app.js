@@ -62,6 +62,14 @@ app.set = (options, msg) => {
   return app;
 };
 
+app.pwd = () => {
+  return shell.pwd();
+};
+
+app.version = () => {
+  return np.getVersion();
+};
+
 app.publish = (args, callback) => {
   // Validates.
   app.init();
