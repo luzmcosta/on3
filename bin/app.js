@@ -28,7 +28,7 @@ var pwd = _shelljs2.default.pwd();
 
 console.log('Current working directory.', pwd);
 
-var pkg = _fs2.default.readFileSync(pwd + 'package.json');
+var pkg = _fs2.default.readFileSync(pwd + '/package.json');
 
 var app = {
   defaults: {
