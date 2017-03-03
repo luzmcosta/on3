@@ -4,6 +4,8 @@ on3 simplifies common workflows for managing a Node module under Git version con
 npm install -g on3
 ```
 
+Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/on3/issues).
+
 # API
 **publish**  
 `on3.publish(args: {}, callback: fn)`  
