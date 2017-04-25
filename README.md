@@ -5,6 +5,8 @@ npm install -g on3
 ```
 
 # API
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/luzmcosta/on3.svg)](https://greenkeeper.io/)
 **publish**  
 `on3.publish(args: {}, callback: fn)`  
 
