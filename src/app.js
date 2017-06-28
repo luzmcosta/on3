@@ -1,9 +1,11 @@
+import fs from 'fs';
 import shell from 'shelljs';
 import np from './np';
 import gi from './gi';
-import pkg from '../package.json';
 
-let app = Object.create({
+const PKG = np.getPackage();
+
+let app = {
   defaults: {
     branch: 'master',
     v: 'prepatch',
@@ -14,14 +16,16 @@ let app = Object.create({
   flags: {
     increment: '--no-git-tag-version -f',
   },
-});
+};
 
-app.init = () => {
+app.init = function() {
   if (!gi.is()) {
     shell.exit(1);
   }
 
-  return app;
+  this.package = PKG;
+
+  return this;
 };
 
 // Gets options passed.
@@ -29,12 +33,33 @@ app.getOptions = (args) => {
   return args.options ? args.options : args;
 };
 
-app.set = (options, msg) => {
+// Communicates a dry run.
+app.dryrun = ({
+  project, msg, oldVersion, currentVersion, pkgPath, gittag, branch
+}) => {
+  // Updates user.
+  console.info(`Dry run complete.`);
+  console.info(`The commit would have been tagged ${gittag}.`);
+  console.info(`You would have pushed to the branch ${branch}.`);
+};
+
+// @TODO Refactor.
+app.set = (options, msg, oldVersion) => {
   let currentVersion = np.getVersion(),
     branch = options.branch || app.defaults.branch,
     npmtag = options.npmtag || options.tag || 'next',
     gitmsg,
-    gittag;
+    gittag,
+    pkg = np.getPackage(),
+    pkgName = pkg ? pkg.name : undefined,
+    pkgPath = np.PKG_PATH,
+    project = `${pkgName}@${currentVersion}#${npmtag}`;
+
+  if (!pkgName) {
+    console.warn('We are unable to find a package.json for this project. ' +
+      'Exiting ...');
+    return app;
+  }
 
   msg += ' to v' + currentVersion + '."';
 
@@ -44,16 +69,36 @@ app.set = (options, msg) => {
 
   if (!options.dryrun) {
     // Executes Git publishing process.
-    gi.add('package.json').commit(msg).tag(gittag, gitmsg).push(branch);
+    gi.add(pkgPath).commit(msg).tag(gittag, gitmsg).push(branch);
 
     // Executes npm publishing process.
     np.publish(npmtag);
+
+    // Updates user.
+    console.info(`Done! You've published ${project}.`);
+  } else {
+    app.dryrun({
+      project, msg, oldVersion, currentVersion, pkgPath, gittag, branch
+    });
   }
 
-  // Updates user.
-  console.log(`${pkg.name}@${currentVersion} #${npmtag} has been published.`);
-
   return app;
+};
+
+app.pwd = (args, callback) => {
+  const pwd = shell.pwd();
+  console.info(pwd);
+
+  // In CLI, returns user to application.
+  callback();
+};
+
+app.version = function(args, callback) {
+  const version = np.getVersion();
+  console.info(version);
+
+  // In CLI, returns user to application.
+  callback();
 };
 
 app.publish = (args, callback) => {
@@ -63,10 +108,22 @@ app.publish = (args, callback) => {
   // Empowers API users to set their args outside an options object.
   let options = app.getOptions(args),
     version = options.version || app.defaults.v,
+    pkg = np.getPackage(),
     currentVersion = np.getVersion(),
+    pkgName = pkg ? pkg.name : undefined,
     msg = options.dryrun ? 'DRYRUN: ' : '';
 
-  console.log(msg + 'Publish ' + version + ' update to ' + pkg.name + '@' + currentVersion + '.');
+  if (!pkgName) {
+    console.warn('We are unable to find a package.json for this project. ' +
+      'Exiting ...');
+
+    // In CLI, returns user to application.
+    callback();
+
+    return app;
+  }
+
+  console.log(msg + 'Publish ' + version + ' update to ' + pkgName + '@' + currentVersion + '.');
 
   // Starts building the message.
   msg = '"Increments from v' + currentVersion;
@@ -74,7 +131,8 @@ app.publish = (args, callback) => {
   // Increments node module version. Does not git tag nor git commit.
   np.increment({
     callback: () => {
-      app.set(options, msg);
+      // Send old version to `set` method.
+      app.set(options, msg, currentVersion);
 
       // In CLI, returns user to our application rather than exit.
       // In API, this can be anything to which the user sets it.

@@ -12,6 +12,9 @@ transformer = {
      * @return {str} An ES6 module.
      */
     node: (code, moduleName) => {
+      if (/export default/.test(code)) {
+        return code;
+      }
       return code + '\nexport default ' + moduleName + ';';
     },
 
@@ -99,6 +102,19 @@ transformer.write = (fileName, code) => {
   return transformer;
 };
 
+transformer.getFile = (output, type) => {
+  return (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    // Transform code & write to file.
+    transformer.set({fileName: output, code: data.toString(), pkg, type});
+
+    return data;
+  };
+};
+
 /**
  * Transforms an ES6 file into an executable.
  *
@@ -108,17 +124,26 @@ transformer.write = (fileName, code) => {
  * @return {obj} transformer
  */
 transformer.exec = (src, output, type) => {
-  // Get contents of cli.js.
-  fs.readFile(src, (err, data) => {
-    if (err) {
-      throw err;
-    }
+  // Determine whether we're handling a file or a directory.
+  const isFile = /[\/|.]\w*/.test(src);
 
-    // Transform code & write to file.
-    transformer.set({fileName: output, code: data.toString(), pkg, type});
+  // If directory, loop through files.
+  if (!isFile) {
+    // Get the source directory.
+    fs.readdir(src, (err, files) => {
+      files.forEach(fileName => {
+        let filePath = src + '/' + fileName,
+            outputFile = output + '/' + fileName;
 
-    return data;
-  });
+        console.log('CONVERT >> ', filePath, '->', outputFile);
+
+        fs.readFile(filePath, transformer.getFile(outputFile, type));
+      });
+    });
+  } else {
+    // Get file contents.
+    fs.readFile(src, transformer.getFile(output, type));
+  }
 
   return transformer;
 };

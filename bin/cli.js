@@ -24,6 +24,12 @@ cli.command('publish', 'Publishes the package to GitHub and npm.').alias('p').op
 // Increment the node module's version.
 cli.command('increment [version]', 'Increment the npm version.').option('-m, --message [msg]', 'Sets the git commit message.').option('-f, --flag [flags]', 'Sets the flags on the `npm version` command.').option('-o, --only', 'Does not commit nor tag after updating the npm version.').option('-v, --version', 'Sets the version.').option('--dryrun', 'Report the would-be changes without executing them.').action(_app2.default.increment);
 
+// Get the node module's version.
+cli.command('version', 'Get the current project\'s npm version.').action(_app2.default.version);
+
+// Get the current directory.
+cli.command('pwd', 'Get the current working directory.').action(_app2.default.pwd);
+
 // Set the prompt.
-cli.delimiter('on >>').show();
+cli.delimiter('on3 >>').show();
 })();

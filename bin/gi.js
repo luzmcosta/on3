@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+;(function(){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44,3 +46,4 @@ gi.tag = function (tag, msg) {
 };
 
 exports.default = gi;
+})();

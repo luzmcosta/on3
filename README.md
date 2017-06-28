@@ -4,6 +4,8 @@ on3 simplifies common workflows for managing a Node module under Git version con
 npm install -g on3
 ```
 
+Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/on3/issues).
+
 # API
 **publish**  
 `on3.publish(args: {}, callback: fn)`  
@@ -58,9 +60,6 @@ Submit your pull requests and feedback to [GitHub](https://github.com/luzmcosta/
 
 ## Engineering Tasks (@todo)
 - Improve the user experience with better, colored feedback
-- Write command to commit + increment
-- Async execution where possible
-- Commit a bundle and point index.js to it
 - Improve test coverage
 - Consider other pains in managing a Node module
 

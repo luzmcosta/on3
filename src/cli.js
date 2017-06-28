@@ -1,6 +1,6 @@
 import vorpal from 'vorpal';
 import shell from 'shelljs';
-import app from '../build/app';
+import app from './app';
 
 let cli = vorpal();
 
@@ -26,5 +26,15 @@ option('-v, --version', 'Sets the version.').
 option('--dryrun', 'Report the would-be changes without executing them.').
 action(app.increment);
 
+// Get the node module's version.
+cli.
+command('version', 'Get the current project\'s npm version.').
+action(app.version);
+
+// Get the current directory.
+cli.
+command('pwd', 'Get the current working directory.').
+action(app.pwd);
+
 // Set the prompt.
-cli.delimiter('on >>').show();
+cli.delimiter('on3 >>').show();
